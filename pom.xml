@@ -10,7 +10,16 @@
 
     <modules>
         <module>base-dependencies</module>
+        <module>base-api</module>
         <module>base-service</module>
+        <module>user-api</module>
         <module>user-service</module>
+        <module>channel-api</module>
+        <module>channel-service</module>
+        <module>media-api</module>
+        <module>media-service</module>
+        <module>review-api</module>
+        <module>review-service</module>
+        <module>frontend</module>
     </modules>
 </project>

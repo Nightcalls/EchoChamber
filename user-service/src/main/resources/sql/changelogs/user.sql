@@ -1,5 +1,8 @@
 --liquibase formatted sql
 
+--changeset shimmermare:create-schema
+CREATE SCHEMA IF NOT EXISTS u;
+
 --changeset shimmermare:add-user-crud
 CREATE TABLE u.user
 (   id            bigserial   not null primary key,

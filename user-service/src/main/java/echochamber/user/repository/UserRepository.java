@@ -1,32 +1,25 @@
 package echochamber.user.repository;
 
-import echochamber.jooq.U;
-import echochamber.jooq.tables.records.UserRecord;
 import echochamber.user.LastLoginInfo;
 import echochamber.user.User;
 import echochamber.user.UserName;
+import echochamber.user.repository.jooq.Sequences;
+import echochamber.user.repository.jooq.tables.records.UserRecord;
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Sequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static echochamber.jooq.tables.User.USER;
+import static echochamber.user.repository.jooq.tables.User.USER;
 
 @Repository
 public class UserRepository {
     private static final Logger log = LoggerFactory.getLogger(UserRepository.class);
-
-    // FIXME fix sequences codegen
-    @SuppressWarnings("unchecked")
-    private static final Sequence<Long> S_USER_ID = (Sequence<Long>) U.U.getSequence("user_id_seq");
 
     private final DSLContext jooqContext;
 
@@ -43,9 +36,7 @@ public class UserRepository {
     }
 
     public List<User> findUsersByIds(Collection<Long> ids) {
-        return jooqContext.selectFrom(USER).where(USER.ID.in(ids)).fetchStream()
-                .map(this::asEntity)
-                .collect(Collectors.toList());
+        return jooqContext.selectFrom(USER).where(USER.ID.in(ids)).fetchStream().map(this::asEntity).collect(Collectors.toList());
     }
 
     public void insertUser(User user) {
@@ -85,7 +76,7 @@ public class UserRepository {
     }
 
     public long generateNewUserId() {
-        return jooqContext.nextval(S_USER_ID);
+        return jooqContext.nextval(Sequences.USER_ID_SEQ);
     }
 
     public User asEntity(UserRecord record) {
@@ -95,10 +86,7 @@ public class UserRepository {
                 record.getCreatedTs(),
                 record.getUpdatedTs(),
                 null,
-                new LastLoginInfo(
-                        record.getLastLoginTs(),
-                        record.getLastLoginIp()
-                ),
+                new LastLoginInfo(record.getLastLoginTs(), record.getLastLoginIp()),
                 record.getDeleted()
         );
     }

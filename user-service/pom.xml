@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>echochamber</groupId>
+        <artifactId>base-dependencies</artifactId>
+        <version>default</version>
+        <relativePath>../base-dependencies/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>user-service</artifactId>
+    <version>default</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>echochamber</groupId>
+            <artifactId>base-service</artifactId>
+            <version>default</version>
+        </dependency>
+        <dependency>
+            <groupId>echochamber</groupId>
+            <artifactId>user-api</artifactId>
+            <version>default</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.zonky.test</groupId>
+            <artifactId>embedded-postgres</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <configuration>
+                    <propertyFile>liquibase.properties</propertyFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>update-sql-for-jooq</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>update</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>jooq-codegen</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <jdbc>
+                        <driver>org.postgresql.Driver</driver>
+                        <url>jdbc:postgresql://localhost:5432/postgres</url>
+                        <user>postgres</user>
+                        <password>postgres</password>
+                    </jdbc>
+
+                    <generator>
+                        <name>org.jooq.codegen.JavaGenerator</name>
+
+                        <database>
+                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                            <!-- Change to service scheme -->
+                            <inputSchema>u</inputSchema>
+                            <includes>.*</includes>
+                        </database>
+
+                        <generate>
+                            <sequences>true</sequences>
+                        </generate>
+
+                        <target>
+                            <!-- Change to service package -->
+                            <packageName>echochamber.user.repository.jooq</packageName>
+                            <directory>src/main/java</directory>
+                        </target>
+                    </generator>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -10,15 +10,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>channel-api</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>echochamber</groupId>
-            <artifactId>base-api</artifactId>
-            <version>default</version>
-        </dependency>
-    </dependencies>
-
+    <artifactId>deps-api</artifactId>
+    <version>default</version>
+    <packaging>pom</packaging>
 
 </project>

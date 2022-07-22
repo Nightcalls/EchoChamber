@@ -1,6 +1,6 @@
 package echochamber.user.api.v1;
 
-import echochamber.user.repository.UserRepository;
+import echochamber.user.service.UserSearchService;
 import echochamber.user.service.change.UserChangeService;
 import echochamber.user.service.change.UserChanges;
 import echochamber.user.service.delete.UserDeleteRestoreService;
@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/user")
 public class UserController {
-    private final UserRepository userDao;
+    private final UserSearchService userSearchService;
     private final UserChangeService userChangeService;
     private final UserDeleteRestoreService userDeleteRestoreService;
 
-    public UserController(UserRepository userDao, UserChangeService userChangeService, UserDeleteRestoreService userDeleteRestoreService) {
-        this.userDao = userDao;
+    public UserController(UserSearchService UserSearchService, UserChangeService userChangeService, UserDeleteRestoreService userDeleteRestoreService) {
+        this.userSearchService = UserSearchService;
         this.userChangeService = userChangeService;
         this.userDeleteRestoreService = userDeleteRestoreService;
     }
 
     @GetMapping("{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable("id") long id) {
-        var user = userDao.findUserById(id);
+        var user = userSearchService.getUser(id);
         if (user.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

@@ -18,7 +18,7 @@ message GetUserRequest {
 }
 
 message GetUserResponse {
-  User user = 1;
+  optional User user = 1;
 }
 
 message GetUsersRequest {
@@ -29,7 +29,7 @@ message GetUsersResponse {
   repeated User user = 1;
 }
 
-service UserApi {
+service UserApiService {
   rpc getUser(GetUserRequest) returns (GetUserResponse);
   rpc getUsers(GetUsersRequest) returns (GetUsersResponse);
 }

@@ -30,6 +30,7 @@
         <dependency> <!-- necessary for Java 9+ -->
             <groupId>org.apache.tomcat</groupId>
             <artifactId>annotations-api</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

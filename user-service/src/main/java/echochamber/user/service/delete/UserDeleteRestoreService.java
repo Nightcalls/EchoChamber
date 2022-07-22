@@ -11,11 +11,12 @@ import java.time.OffsetDateTime;
 
 @Service
 public class UserDeleteRestoreService {
-    private final UserRepository userRepository;
-    private final Logger log = LoggerFactory.getLogger(UserDeleteRestoreService.class);
+    private static final Logger log = LoggerFactory.getLogger(UserDeleteRestoreService.class);
 
-    public UserDeleteRestoreService(UserRepository userDao) {
-        this.userRepository = userDao;
+    private final UserRepository userRepository;
+
+    public UserDeleteRestoreService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Transactional

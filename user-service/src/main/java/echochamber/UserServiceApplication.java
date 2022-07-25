@@ -11,8 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
-public class EchochamberApplication {
+public class UserServiceApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(EchochamberApplication.class, args);
+		SpringApplication.run(UserServiceApplication.class, args);
 	}
 }

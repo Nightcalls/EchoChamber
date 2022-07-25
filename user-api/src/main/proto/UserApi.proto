@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package echochamber.user.api.grpc;
+
+import "google/protobuf/timestamp.proto";
+
+message User {
+  uint64 id = 1;
+  string name = 2;
+  google.protobuf.Timestamp createdTs = 3; // UTC+0
+  google.protobuf.Timestamp updatedTs = 4; // UTC+0
+  reserved 5 to 19;
+  bool deleted = 20;
+}
+
+message GetUserRequest {
+  uint64 userId = 1;
+}
+
+message GetUserResponse {
+  optional User user = 1;
+}
+
+message GetUsersRequest {
+  repeated uint64 userId = 1;
+}
+
+message GetUsersResponse {
+  repeated User user = 1;
+}
+
+service UserApiService {
+  rpc getUser(GetUserRequest) returns (GetUserResponse);
+  rpc getUsers(GetUsersRequest) returns (GetUsersResponse);
+}

@@ -9,7 +9,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>base-dependencies</module>
+        <module>deps-common</module>
+        <module>deps-api</module>
+        <module>deps-services</module>
+        <module>base-common</module>
         <module>base-api</module>
         <module>base-service</module>
         <module>user-api</module>

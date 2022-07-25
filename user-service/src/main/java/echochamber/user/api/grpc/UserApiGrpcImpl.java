@@ -3,11 +3,17 @@ package echochamber.user.api.grpc;
 import echochamber.user.User;
 import echochamber.user.api.grpc.UserApi.GetUserRequest;
 import echochamber.user.api.grpc.UserApi.GetUserResponse;
+import echochamber.user.api.grpc.UserApi.GetUsersRequest;
+import echochamber.user.api.grpc.UserApi.GetUsersResponse;
 import echochamber.user.service.UserSearchService;
+import echochamber.util.ProtoTypeConverters;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserApiGrpcImpl extends UserApiServiceGrpc.UserApiServiceImplBase {
@@ -35,16 +41,28 @@ public class UserApiGrpcImpl extends UserApiServiceGrpc.UserApiServiceImplBase {
     }
 
     @Override
-    public void getUsers(UserApi.GetUsersRequest request, StreamObserver<UserApi.GetUsersResponse> responseObserver) {
-        super.getUsers(request, responseObserver);
+    public void getUsers(GetUsersRequest request, StreamObserver<GetUsersResponse> responseObserver) {
+        try {
+            List<UserApi.User> users = userSearchService.getUsers(request.getUserIdList())
+                    .stream()
+                    .map(UserApiGrpcImpl::toProtoUser)
+                    .collect(Collectors.toList());
+            GetUsersResponse response = GetUsersResponse.newBuilder().addAllUser(users).build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            responseObserver.onError(new RuntimeException("User search failed for user ids " +
+                    request.getUserIdList(), e));
+            log.error("User search failed for user ids {}", request.getUserIdList(), e);
+        }
     }
 
     private static UserApi.User toProtoUser(User user) {
         return UserApi.User.newBuilder()
                 .setId(user.getId())
                 .setName(user.getName().getName())
-//                .setCreatedTs(user.getCreatedTs())
-//                .setUpdatedTs(user.getUpdatedTs())
+                .setCreatedTs(ProtoTypeConverters.offsetDateTimeToTimestamp(user.getCreatedTs()))
+                .setUpdatedTs(ProtoTypeConverters.offsetDateTimeToTimestamp(user.getUpdatedTs()))
                 .setDeleted(user.isDeleted())
                 .build();
     }

@@ -28,7 +28,7 @@
         <tomcat-annotations-api.version>6.0.53</tomcat-annotations-api.version>
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
         <os-maven-plugin.version>1.6.2</os-maven-plugin.version>
-        <protoc.version>3.21.2</protoc.version>
+        <protobuf.version>3.19.2</protobuf.version>
     </properties>
 
     <dependencyManagement>
@@ -69,6 +69,11 @@
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
                 <version>${os-maven-plugin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>${protobuf.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

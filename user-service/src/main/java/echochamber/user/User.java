@@ -108,6 +108,7 @@ public class User {
     }
 
     public static class Builder {
+        //TODO check the need for Long
         private Long id;
         private UserName name;
         private OffsetDateTime createdTs;

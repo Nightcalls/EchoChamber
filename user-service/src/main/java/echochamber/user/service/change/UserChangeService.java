@@ -17,8 +17,8 @@ public class UserChangeService {
 
     private final UserRepository userRepository;
 
-    public UserChangeService(UserRepository userDao) {
-        this.userRepository = userDao;
+    public UserChangeService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Transactional

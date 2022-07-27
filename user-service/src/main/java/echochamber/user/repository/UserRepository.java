@@ -36,7 +36,8 @@ public class UserRepository {
     }
 
     public List<User> findUsersByIds(Collection<Long> ids) {
-        return jooqContext.selectFrom(USER).where(USER.ID.in(ids)).fetchStream().map(this::asEntity).collect(Collectors.toList());
+        return jooqContext.selectFrom(USER).where(USER.ID.in(ids)).fetchStream().map(this::asEntity)
+                .collect(Collectors.toList());
     }
 
     public void insertUser(User user) {

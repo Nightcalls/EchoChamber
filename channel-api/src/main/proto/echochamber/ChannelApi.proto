@@ -10,6 +10,7 @@ message Channel {
   uint64 channelOwner = 3;
   google.protobuf.Timestamp createdTs = 4;
   google.protobuf.Timestamp updatedTs = 5;
+  bool deleted = 6;
 }
 
 message GetChannelRequest {

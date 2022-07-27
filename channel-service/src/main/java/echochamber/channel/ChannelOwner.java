@@ -1,12 +1,12 @@
 package echochamber.channel;
 
-import echochamber.channel.api.UserForChannelDto;
+import echochamber.user.api.grpc.UserApi;
 
 public class ChannelOwner {
     private final long userId;
 
-    public ChannelOwner(UserForChannelDto userForChannelDto) {
-        this.userId = userForChannelDto.getId();
+    public ChannelOwner(UserApi.GetUserResponse userResponse) {
+        this.userId = userResponse.getUser().getId();
     }
 
     public long getUserId() {

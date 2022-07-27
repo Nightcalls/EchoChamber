@@ -1,6 +1,6 @@
 package echochamber.channel;
 
-import echochamber.channel.api.UserForChannelDto;
+import echochamber.user.api.grpc.UserApi;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -127,8 +127,9 @@ public class Channel {
             return this;
         }
 
-        public Builder owner(UserForChannelDto userForChannelDto) {
-            return owner(new ChannelOwner(userForChannelDto));
+        //FIXME Use UserDTO
+        public Builder owner(UserApi.GetUserResponse userResponse) {
+            return owner(new ChannelOwner(userResponse));
         }
 
         public Builder owner(ChannelOwner owner) {

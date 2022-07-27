@@ -22,7 +22,7 @@ public class UserDeleteRestoreService {
     @Transactional
     public void deleteUser(long userId) {
         User user = userRepository.findUserByIdForUpdate(userId)
-                .orElseThrow(() -> new UserDeleteRestoreService.NoSuchUserException(userId));
+                .orElseThrow(() -> new NoSuchUserException(userId));
         if (user.isDeleted()) {
             log.warn("Tried to delete user {} but user is already deleted", userId);
             return;
@@ -36,7 +36,7 @@ public class UserDeleteRestoreService {
     @Transactional
     public void restoreUser(long userId) {
         User user = userRepository.findUserByIdForUpdate(userId)
-                .orElseThrow(() -> new UserDeleteRestoreService.NoSuchUserException(userId));
+                .orElseThrow(() -> new NoSuchUserException(userId));
         if (!user.isDeleted()) {
             log.warn("Tried to restore user {} but user is not deleted", userId);
             return;

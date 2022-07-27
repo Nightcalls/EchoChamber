@@ -3,6 +3,8 @@ package echochamber.user.api.v1;
 import echochamber.user.service.UserSearchService;
 import echochamber.user.service.change.UserChangeService;
 import echochamber.user.service.change.UserChanges;
+import echochamber.user.service.create.UserCreateService;
+import echochamber.user.service.create.UserCreation;
 import echochamber.user.service.delete.UserDeleteRestoreService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/user")
 public class UserController {
     private final UserSearchService userSearchService;
+    private final UserCreateService userCreateService;
     private final UserChangeService userChangeService;
     private final UserDeleteRestoreService userDeleteRestoreService;
 
-    public UserController(UserSearchService UserSearchService, UserChangeService userChangeService, UserDeleteRestoreService userDeleteRestoreService) {
-        this.userSearchService = UserSearchService;
+    public UserController(UserSearchService userSearchService, UserCreateService userCreateService,
+                          UserChangeService userChangeService, UserDeleteRestoreService userDeleteRestoreService) {
+        this.userSearchService = userSearchService;
+        this.userCreateService = userCreateService;
         this.userChangeService = userChangeService;
         this.userDeleteRestoreService = userDeleteRestoreService;
     }
@@ -28,6 +33,16 @@ public class UserController {
         }
         var userDto = UserDto.fromUser(user.get());
         return ResponseEntity.ok(userDto);
+    }
+
+    @PostMapping("create")
+    public ResponseEntity<?> createUser(@RequestBody UserCreation userCreation) {
+        try {
+            userCreateService.createUser(userCreation);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PatchMapping("{id}")

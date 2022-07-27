@@ -20,11 +20,11 @@ public class UserSearchService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUser(long id) {
-        return userRepository.findUserById(id);
+    public Optional<User> getUser(long userId) {
+        return userRepository.findUserById(userId);
     }
 
-    public List<User> getUsers(Collection<Long> ids) {
-        return userRepository.findUsersByIds(ids);
+    public List<User> getUsers(Collection<Long> userIds) {
+        return userRepository.findUsersByIds(userIds);
     }
 }

@@ -16,17 +16,17 @@ public class UserCreateService {
         this.userRepository = userRepository;
     }
 
-    public void createUser(UserCreation userCreation) {
+    public void createUser(CreateUserRequest createUserRequest) {
         long userId = userRepository.generateNewUserId();
         User user = new User
                 .Builder()
                 .id(userId)
-                .name(userCreation.getName())
-                .createdTs(userCreation.getCreatedTs())
-                .updatedTs(userCreation.getUpdatedTs())
-                .discordAuthInfo(userCreation.getDiscordAuthInfo())
-                .lastLoginInfo(userCreation.getIp())
-                .deleted(userCreation.isDeleted())
+                .name(createUserRequest.getName())
+                .createdTs(createUserRequest.getCreatedTs())
+                .updatedTs(createUserRequest.getUpdatedTs())
+                .discordAuthInfo(createUserRequest.getDiscordAuthInfo())
+                .lastLoginInfo(createUserRequest.getIp())
+                .deleted(createUserRequest.isDeleted())
                 .build();
         userRepository.insertUser(user);
     }

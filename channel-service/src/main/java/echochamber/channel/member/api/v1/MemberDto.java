@@ -1,9 +1,9 @@
-package echochamber.member.api.v1;
+package echochamber.channel.member.api.v1;
 
-import echochamber.member.Member;
-import echochamber.member.MemberName;
-import echochamber.member.MemberRole;
-import echochamber.member.MemberUser;
+import echochamber.channel.member.Member;
+import echochamber.channel.member.MemberName;
+import echochamber.channel.member.MemberRole;
+import echochamber.channel.member.MemberUser;
 
 import java.time.OffsetDateTime;
 

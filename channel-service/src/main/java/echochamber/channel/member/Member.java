@@ -1,4 +1,4 @@
-package echochamber.member;
+package echochamber.channel.member;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;

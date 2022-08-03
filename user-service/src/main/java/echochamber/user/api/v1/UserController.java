@@ -4,7 +4,7 @@ import echochamber.user.service.UserSearchService;
 import echochamber.user.service.change.UserChangeService;
 import echochamber.user.service.change.UserChanges;
 import echochamber.user.service.create.UserCreateService;
-import echochamber.user.service.create.UserCreation;
+import echochamber.user.service.create.CreateUserRequest;
 import echochamber.user.service.delete.UserDeleteRestoreService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,10 +35,11 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
+    //FIXME remove whe authorization will be ready
     @PostMapping("create")
-    public ResponseEntity<?> createUser(@RequestBody UserCreation userCreation) {
+    public ResponseEntity<?> createUser(@RequestBody CreateUserRequest createUserRequest) {
         try {
-            userCreateService.createUser(userCreation);
+            userCreateService.createUser(createUserRequest);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

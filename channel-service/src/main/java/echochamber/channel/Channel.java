@@ -132,6 +132,11 @@ public class Channel {
             return owner(new ChannelOwner(userResponse));
         }
 
+        //FIXME Use UserDTO
+        public Builder owner(long userId) {
+            return owner(new ChannelOwner(userId));
+        }
+
         public Builder owner(ChannelOwner owner) {
             this.owner = owner;
             return this;

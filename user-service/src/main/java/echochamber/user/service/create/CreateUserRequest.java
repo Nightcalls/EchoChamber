@@ -7,7 +7,7 @@ import echochamber.user.AuthInfo;
 import javax.annotation.Nullable;
 import java.time.OffsetDateTime;
 
-public class UserCreation {
+public class CreateUserRequest {
     @Nullable
     private final String name;
     @Nullable
@@ -22,7 +22,7 @@ public class UserCreation {
     private final boolean deleted;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    public UserCreation(
+    public CreateUserRequest(
             @JsonProperty("name") @Nullable String name,
             @JsonProperty("createdTs") @Nullable OffsetDateTime createdTs,
             @JsonProperty("updatedTs") @Nullable OffsetDateTime updatedTs,

@@ -1,4 +1,4 @@
-package echochamber.member.repository;
+package echochamber.channel.member.repository;
 
 import org.jooq.DSLContext;
 import org.slf4j.Logger;

@@ -9,6 +9,10 @@ public class ChannelOwner {
         this.userId = userResponse.getUser().getId();
     }
 
+    public ChannelOwner(long userId) {
+        this.userId = userId;
+    }
+
     public long getUserId() {
         return userId;
     }

@@ -4,6 +4,7 @@ import echochamber.channel.service.ChannelSearchService;
 import echochamber.channel.service.change.ChannelChangeService;
 import echochamber.channel.service.change.ChannelChanges;
 import echochamber.channel.service.create.ChannelCreateService;
+import echochamber.channel.service.create.CreateChannelRequest;
 import echochamber.channel.service.delete.ChannelDeleteRestoreService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +36,16 @@ public class ChannelController {
         return ResponseEntity.ok(channelDto);
     }
 
-    //TODO Implement createChannel
-//    @PostMapping("create")
-//    public ResponseEntity<ChannelDto> createChannel(@RequestBody ChannelCreation channelCreation) {
-//
-//    }
+    //FIXME remove whe authorization will be ready
+    @PostMapping("create")
+    public ResponseEntity<?> createChannel(@RequestBody CreateChannelRequest createChannelRequest) {
+        try {
+            channelCreateService.createChannel(createChannelRequest);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @PatchMapping("{id}")
     public ResponseEntity<?> editChannel(@PathVariable("id") long id, @RequestBody ChannelChanges changes) {

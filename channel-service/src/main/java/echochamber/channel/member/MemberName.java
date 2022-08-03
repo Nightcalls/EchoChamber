@@ -1,6 +1,4 @@
-package echochamber.member;
-
-import echochamber.channel.ChannelName;
+package echochamber.channel.member;
 
 import java.util.Set;
 

@@ -10,7 +10,7 @@ import io.grpc.ManagedChannelBuilder;
 public class ChannelForUserApi {
 
     //id come from front
-    public ChannelOwner grpcUserResponse(long userId) {
+    public static UserApi.GetUserResponse grpcUserResponse(long userId) {
         ManagedChannel grpcChannel = ManagedChannelBuilder.forTarget("localhost:50001")
                 .usePlaintext()
                 .build();
@@ -21,6 +21,6 @@ public class ChannelForUserApi {
         var response = stub
                 .getUser(UserApi.GetUserRequest.newBuilder().setUserId(userId).build());
 
-        return new ChannelOwner(response);
+        return response;
     }
 }

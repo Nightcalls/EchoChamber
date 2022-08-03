@@ -1,4 +1,4 @@
-package echochamber.member;
+package echochamber.channel.member;
 
 public class MemberRole {
     public enum Roles {

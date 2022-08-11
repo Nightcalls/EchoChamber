@@ -6,11 +6,10 @@
 
     <parent>
         <artifactId>deps-common</artifactId>
-        <groupId>echochamber</groupId>
+        <groupId>io.github.nightcalls</groupId>
         <version>default</version>
         <relativePath>../deps-common/pom.xml</relativePath>
     </parent>
-
 
     <artifactId>deps-api</artifactId>
     <version>default</version>

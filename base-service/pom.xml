@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>echochamber</groupId>
+        <groupId>io.github.nightcalls</groupId>
         <artifactId>deps-services</artifactId>
         <version>default</version>
         <relativePath>../deps-services/pom.xml</relativePath>
@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>base-common</artifactId>
             <version>default</version>
         </dependency>
@@ -48,7 +48,6 @@
         <!--			<groupId>org.springframework.session</groupId>-->
         <!--			<artifactId>spring-session-core</artifactId>-->
         <!--		</dependency>-->
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -67,9 +66,9 @@
             <artifactId>jooq-codegen</artifactId>
         </dependency>
         <dependency>
-                <groupId>io.grpc</groupId>
-                <artifactId>grpc-netty-shaded</artifactId>
-                <scope>runtime</scope>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

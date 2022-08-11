@@ -1,0 +1,3 @@
+[submodule "embedded-postgres-jooq-generator-maven-plugin"]
+	path = embedded-postgres-jooq-generator-maven-plugin
+	url = git@github.com:Nightcalls/embedded-postgres-jooq-generator-maven-plugin.git

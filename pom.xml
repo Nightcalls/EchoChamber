@@ -3,12 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>echochamber</groupId>
+    <groupId>io.github.nightcalls</groupId>
     <artifactId>echochamber</artifactId>
     <version>default</version>
     <packaging>pom</packaging>
 
     <modules>
+        <module>embedded-postgres-jooq-generator-maven-plugin</module>
         <module>deps-common</module>
         <module>deps-api</module>
         <module>deps-services</module>

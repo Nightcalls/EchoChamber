@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>deps-common</artifactId>
-        <groupId>echochamber</groupId>
+        <groupId>io.github.nightcalls</groupId>
+        <artifactId>deps-services</artifactId>
         <version>default</version>
-        <relativePath>../deps-common/pom.xml</relativePath>
+        <relativePath>../deps-services/pom.xml</relativePath>
     </parent>
 
     <artifactId>channel-service</artifactId>
@@ -16,17 +16,17 @@
 
     <dependencies>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>base-service</artifactId>
             <version>default</version>
         </dependency>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>channel-api</artifactId>
             <version>default</version>
         </dependency>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>user-api</artifactId>
             <version>default</version>
         </dependency>
@@ -54,28 +54,11 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <configuration>
-                    <propertyFile>liquibase.properties</propertyFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>update-sql-for-jooq</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven</artifactId>
+                <groupId>io.github.nightcalls</groupId>
+                <artifactId>embedded-postgres-jooq-generator-maven-plugin</artifactId>
 
                 <executions>
                     <execution>
-                        <id>jooq-codegen</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
@@ -84,20 +67,13 @@
                 </executions>
 
                 <configuration>
-                    <jdbc>
-                        <driver>org.postgresql.Driver</driver>
-                        <url>jdbc:postgresql://localhost:5432/postgres</url>
-                        <user>postgres</user>
-                        <password>postgres</password>
-                    </jdbc>
-
-                    <generator>
-                        <name>org.jooq.codegen.JavaGenerator</name>
-
+                    <!-- Path to your changelog file relative to module dir -->
+                    <liquibase.changeLogFile>src/main/resources/sql/changelogs.xml</liquibase.changeLogFile>
+                    <!-- jOOQ codegen config - see https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/ -->
+                    <jooq.generator>
                         <database>
-                            <name>org.jooq.meta.postgres.PostgresDatabase</name>
                             <!-- Change to service scheme -->
-                            <inputSchema>s</inputSchema>
+                            <inputSchema>c</inputSchema>
                             <includes>.*</includes>
                         </database>
 
@@ -107,10 +83,11 @@
 
                         <target>
                             <!-- Change to service package -->
-                            <packageName>echochamber.channel.repository.jooq</packageName>
+                            <packageName>io.github.nightcalls.echochamber.channel.repository.jooq</packageName>
                             <directory>src/main/java</directory>
+                            <encoding>${project.build.sourceEncoding}</encoding>
                         </target>
-                    </generator>
+                    </jooq.generator>
                 </configuration>
             </plugin>
         </plugins>

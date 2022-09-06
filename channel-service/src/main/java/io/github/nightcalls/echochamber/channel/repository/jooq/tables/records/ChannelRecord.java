@@ -52,16 +52,16 @@ public class ChannelRecord extends UpdatableRecordImpl<ChannelRecord> implements
     }
 
     /**
-     * Setter for <code>c.channel.owner</code>.
+     * Setter for <code>c.channel.owner_id</code>.
      */
-    public void setOwner(Long value) {
+    public void setOwnerId(Long value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>c.channel.owner</code>.
+     * Getter for <code>c.channel.owner_id</code>.
      */
-    public Long getOwner() {
+    public Long getOwnerId() {
         return (Long) get(2);
     }
 
@@ -142,7 +142,7 @@ public class ChannelRecord extends UpdatableRecordImpl<ChannelRecord> implements
 
     @Override
     public Field<Long> field3() {
-        return Channel.CHANNEL.OWNER;
+        return Channel.CHANNEL.OWNER_ID;
     }
 
     @Override
@@ -172,7 +172,7 @@ public class ChannelRecord extends UpdatableRecordImpl<ChannelRecord> implements
 
     @Override
     public Long component3() {
-        return getOwner();
+        return getOwnerId();
     }
 
     @Override
@@ -202,7 +202,7 @@ public class ChannelRecord extends UpdatableRecordImpl<ChannelRecord> implements
 
     @Override
     public Long value3() {
-        return getOwner();
+        return getOwnerId();
     }
 
     @Override
@@ -234,7 +234,7 @@ public class ChannelRecord extends UpdatableRecordImpl<ChannelRecord> implements
 
     @Override
     public ChannelRecord value3(Long value) {
-        setOwner(value);
+        setOwnerId(value);
         return this;
     }
 
@@ -281,12 +281,12 @@ public class ChannelRecord extends UpdatableRecordImpl<ChannelRecord> implements
     /**
      * Create a detached, initialised ChannelRecord
      */
-    public ChannelRecord(Long id, String name, Long owner, OffsetDateTime createdTs, OffsetDateTime updatedTs, Boolean deleted) {
+    public ChannelRecord(Long id, String name, Long ownerId, OffsetDateTime createdTs, OffsetDateTime updatedTs, Boolean deleted) {
         super(Channel.CHANNEL);
 
         setId(id);
         setName(name);
-        setOwner(owner);
+        setOwnerId(ownerId);
         setCreatedTs(createdTs);
         setUpdatedTs(updatedTs);
         setDeleted(deleted);

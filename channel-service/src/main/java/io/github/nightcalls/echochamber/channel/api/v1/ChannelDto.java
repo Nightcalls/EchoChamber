@@ -1,30 +1,28 @@
 package io.github.nightcalls.echochamber.channel.api.v1;
 
 import io.github.nightcalls.echochamber.channel.Channel;
-import io.github.nightcalls.echochamber.channel.ChannelName;
-import io.github.nightcalls.echochamber.channel.ChannelOwner;
 
 import java.time.OffsetDateTime;
 
 public class ChannelDto {
     private final long id;
-    private final ChannelName name;
-    private final ChannelOwner owner;
+    private final String name;
+    private final long ownerId;
     private final OffsetDateTime createdTs;
     private final OffsetDateTime updatedTs;
     private final boolean deleted;
 
     public ChannelDto(
             long id,
-            ChannelName name,
-            ChannelOwner owner,
+            String name,
+            long ownerId,
             OffsetDateTime createdTs,
             OffsetDateTime updatedTs,
             boolean deleted
     ) {
         this.id = id;
         this.name = name;
-        this.owner = owner;
+        this.ownerId = ownerId;
         this.createdTs = createdTs;
         this.updatedTs = updatedTs;
         this.deleted = deleted;
@@ -34,12 +32,12 @@ public class ChannelDto {
         return id;
     }
 
-    public ChannelName getName() {
+    public String getName() {
         return name;
     }
 
-    public ChannelOwner getOwner() {
-        return owner;
+    public long getOwnerId() {
+        return ownerId;
     }
 
     public OffsetDateTime getCreatedTs() {
@@ -59,7 +57,7 @@ public class ChannelDto {
         return "ChannelDto{" +
                 "id=" + id +
                 ", name=" + name +
-                ", owner=" + owner +
+                ", ownerId=" + ownerId +
                 ", createdTs=" + createdTs +
                 ", updatedTs=" + updatedTs +
                 ", deleted=" + deleted +
@@ -69,8 +67,8 @@ public class ChannelDto {
     public static ChannelDto fromChannel(Channel channel) {
         return new ChannelDto(
                 channel.getId(),
-                channel.getName(),
-                channel.getOwner(),
+                channel.getName().getName(),
+                channel.getOwner().getOwnerId(),
                 channel.getCreatedTs(),
                 channel.getUpdatedTs(),
                 channel.isDeleted()

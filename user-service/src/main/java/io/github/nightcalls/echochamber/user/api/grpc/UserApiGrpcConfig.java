@@ -23,5 +23,4 @@ public class UserApiGrpcConfig {
                 .build()
                 .start();
     }
-
 }

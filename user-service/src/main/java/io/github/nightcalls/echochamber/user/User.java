@@ -99,7 +99,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && deleted == user.deleted && name.equals(user.name) && createdTs.equals(user.createdTs) && updatedTs.equals(user.updatedTs) && Objects.equals(discordAuthInfo, user.discordAuthInfo) && lastLoginInfo.equals(user.lastLoginInfo);
+        return id == user.id && deleted == user.deleted && name.equals(user.name) && createdTs.equals(user.createdTs)
+                && updatedTs.equals(user.updatedTs) &&
+                // FIXME discordInfo.equals()
+                Objects.equals(discordAuthInfo, user.discordAuthInfo) &&
+                lastLoginInfo.equals(user.lastLoginInfo);
     }
 
     @Override
@@ -108,8 +112,7 @@ public class User {
     }
 
     public static class Builder {
-        // FIXME Check the need for Long
-        private Long id;
+        private long id;
         private UserName name;
         private OffsetDateTime createdTs;
         private OffsetDateTime updatedTs;

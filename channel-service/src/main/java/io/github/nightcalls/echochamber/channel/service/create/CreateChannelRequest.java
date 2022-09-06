@@ -4,57 +4,25 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.annotation.Nullable;
-import java.time.OffsetDateTime;
 
 public class CreateChannelRequest {
-    @Nullable
     private final String name;
-    @Nullable
-    private final long userId;
-    @Nullable
-    private final OffsetDateTime createdTs;
-    @Nullable
-    private final OffsetDateTime updatedTs;
-    @Nullable
-    private final boolean deleted;
+    private final long ownerId;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public CreateChannelRequest(
-            @JsonProperty("name") @Nullable String name,
-            @JsonProperty("userId") @Nullable long userId,
-            @JsonProperty("createdTs") @Nullable OffsetDateTime createdTs,
-            @JsonProperty("updatedTs") @Nullable OffsetDateTime updatedTs,
-            @JsonProperty("deleted") @Nullable boolean deleted
+            @JsonProperty(value = "name", required = true) String name,
+            @JsonProperty(value = "ownerId", required = true) long ownerId
     ) {
         this.name = name;
-        this.userId = userId;
-        this.createdTs = createdTs;
-        this.updatedTs = updatedTs;
-        this.deleted = deleted;
+        this.ownerId = ownerId;
     }
 
-    @Nullable
     public String getName() {
         return name;
     }
 
-    @Nullable
-    public long getUserId() {
-        return userId;
-    }
-
-    @Nullable
-    public OffsetDateTime getCreatedTs() {
-        return createdTs;
-    }
-
-    @Nullable
-    public OffsetDateTime getUpdatedTs() {
-        return updatedTs;
-    }
-
-    @Nullable
-    public boolean isDeleted() {
-        return deleted;
+    public long getOwnerId() {
+        return ownerId;
     }
 }

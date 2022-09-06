@@ -36,7 +36,6 @@ public class ChannelController {
         return ResponseEntity.ok(channelDto);
     }
 
-    // FIXME remove when authorization will be ready
     @PostMapping("create")
     public ResponseEntity<?> createChannel(@RequestBody CreateChannelRequest createChannelRequest) {
         try {

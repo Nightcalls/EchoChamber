@@ -1,7 +1,5 @@
 package io.github.nightcalls.echochamber.channel.service.delete;
 
-import io.github.nightcalls.echochamber.channel.ChannelOwner;
-import io.github.nightcalls.echochamber.channel.api.grpc.ChannelForUserApi;
 import io.github.nightcalls.echochamber.util.DbTestBase;
 import io.github.nightcalls.echochamber.channel.Channel;
 import io.github.nightcalls.echochamber.channel.repository.ChannelRepository;
@@ -28,7 +26,7 @@ class ChannelDeleteRestoreServiceTest extends DbTestBase {
 
     @BeforeEach
     void beforeEach() {
-        var channelNormal = new Channel.Builder().id(CHANNEL_ID).name("test").owner(new ChannelOwner(ChannelForUserApi.grpcUserResponse(USER_ID))).build();
+        var channelNormal = new Channel.Builder().id(CHANNEL_ID).name("test").owner(USER_ID).build();
         var channelDeleted = new Channel.Builder(channelNormal).id(DELETED_CHANNEL_ID).deleted(true).build();
         channelRepository.insertChannels(List.of(channelNormal, channelDeleted));
     }

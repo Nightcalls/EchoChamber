@@ -63,6 +63,7 @@ public class ChannelApiGrpcImpl extends ChannelApiServiceGrpc.ChannelApiServiceI
         return ChannelApi.Channel.newBuilder()
                 .setId(channel.getId())
                 .setName(channel.getName().getName())
+                .setChannelOwner(channel.getOwner().getOwnerId())
                 .setCreatedTs(ProtoTypeConverters.offsetDateTimeToTimestamp(channel.getCreatedTs()))
                 .setUpdatedTs(ProtoTypeConverters.offsetDateTimeToTimestamp(channel.getUpdatedTs()))
                 .setDeleted(channel.isDeleted())

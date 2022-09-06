@@ -7,6 +7,7 @@ import io.github.nightcalls.echochamber.user.AuthInfo;
 import javax.annotation.Nullable;
 import java.time.OffsetDateTime;
 
+// FIXME dev-only, remove later
 public class CreateUserRequest {
     @Nullable
     private final String name;

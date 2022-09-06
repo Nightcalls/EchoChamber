@@ -19,7 +19,8 @@ public class Channel {
             ChannelOwner owner,
             OffsetDateTime createdTs,
             OffsetDateTime updatedTs,
-            boolean deleted) {
+            boolean deleted
+    ) {
         this.id = id;
         setName(name);
         setOwner(owner);
@@ -85,7 +86,9 @@ public class Channel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Channel channel = (Channel) o;
-        return id == channel.id && deleted == channel.deleted && name.equals(channel.name) && owner.equals(channel.owner) && createdTs.equals(channel.createdTs) && updatedTs.equals(channel.updatedTs);
+        return id == channel.id && deleted == channel.deleted && name.equals(channel.name) &&
+                owner.equals(channel.owner) && createdTs.equals(channel.createdTs)
+                && updatedTs.equals(channel.updatedTs);
     }
 
     @Override
@@ -94,7 +97,7 @@ public class Channel {
     }
 
     public static class Builder {
-        private Long id;
+        private long id;
         private ChannelName name;
         private ChannelOwner owner;
         private OffsetDateTime createdTs;
@@ -127,14 +130,8 @@ public class Channel {
             return this;
         }
 
-        // FIXME Use UserDTO
-        public Builder owner(UserApi.GetUserResponse userResponse) {
-            return owner(new ChannelOwner(userResponse));
-        }
-
-        // FIXME Use UserDTO
-        public Builder owner(long userId) {
-            return owner(new ChannelOwner(userId));
+        public Builder owner(long ownerId) {
+            return owner(new ChannelOwner(ownerId));
         }
 
         public Builder owner(ChannelOwner owner) {

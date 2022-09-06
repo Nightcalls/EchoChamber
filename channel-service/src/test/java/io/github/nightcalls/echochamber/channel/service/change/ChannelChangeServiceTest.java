@@ -1,7 +1,6 @@
 package io.github.nightcalls.echochamber.channel.service.change;
 
 import io.github.nightcalls.echochamber.channel.ChannelOwner;
-import io.github.nightcalls.echochamber.channel.api.grpc.ChannelForUserApi;
 import io.github.nightcalls.echochamber.util.DbTestBase;
 import io.github.nightcalls.echochamber.channel.Channel;
 import io.github.nightcalls.echochamber.channel.ChannelName;
@@ -28,7 +27,7 @@ class ChannelChangeServiceTest extends DbTestBase {
         channelRepository.insertChannel(new Channel(
                 CHANNEL_ID,
                 new ChannelName("test"),
-                new ChannelOwner(ChannelForUserApi.grpcUserResponse(USER_ID)),
+                new ChannelOwner(USER_ID),
                 OffsetDateTime.now(),
                 OffsetDateTime.now(),
                 false

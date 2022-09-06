@@ -60,9 +60,9 @@ public class Channel extends TableImpl<ChannelRecord> {
     public final TableField<ChannelRecord, String> NAME = createField(DSL.name("name"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>c.channel.owner</code>.
+     * The column <code>c.channel.owner_id</code>.
      */
-    public final TableField<ChannelRecord, Long> OWNER = createField(DSL.name("owner"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<ChannelRecord, Long> OWNER_ID = createField(DSL.name("owner_id"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>c.channel.created_ts</code>.

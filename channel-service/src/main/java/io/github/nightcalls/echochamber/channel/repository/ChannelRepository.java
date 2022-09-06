@@ -93,7 +93,7 @@ public class ChannelRepository {
         return new Channel(
                 record.getId(),
                 new ChannelName(record.getName()),
-                new ChannelOwner(record.getOwner()),
+                new ChannelOwner(record.getOwnerId()),
                 record.getCreatedTs(),
                 record.getUpdatedTs(),
                 record.getDeleted()
@@ -104,7 +104,7 @@ public class ChannelRepository {
         var record = new ChannelRecord();
         record.setId(channel.getId());
         record.setName(channel.getName().getName());
-        record.setOwner(channel.getOwner().getUserId());
+        record.setOwnerId(channel.getOwner().getOwnerId());
         record.setCreatedTs(channel.getCreatedTs());
         record.setUpdatedTs(channel.getUpdatedTs());
         record.setDeleted(channel.isDeleted());

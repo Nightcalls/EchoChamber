@@ -1,19 +1,13 @@
 package io.github.nightcalls.echochamber.channel;
 
-import io.github.nightcalls.echochamber.user.api.grpc.UserApi;
-
 public class ChannelOwner {
     private final long userId;
 
-    public ChannelOwner(UserApi.GetUserResponse userResponse) {
-        this.userId = userResponse.getUser().getId();
+    public ChannelOwner(long ownerId) {
+        this.userId = ownerId;
     }
 
-    public ChannelOwner(long userId) {
-        this.userId = userId;
-    }
-
-    public long getUserId() {
+    public long getOwnerId() {
         return userId;
     }
 

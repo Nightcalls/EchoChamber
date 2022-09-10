@@ -4,7 +4,6 @@ import io.github.nightcalls.echochamber.channel.service.ChannelSearchService;
 import io.github.nightcalls.echochamber.channel.service.change.ChannelChangeService;
 import io.github.nightcalls.echochamber.channel.service.change.ChannelChanges;
 import io.github.nightcalls.echochamber.channel.service.create.ChannelCreateService;
-import io.github.nightcalls.echochamber.channel.service.create.CreateChannelRequest;
 import io.github.nightcalls.echochamber.channel.service.delete.ChannelDeleteRestoreService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

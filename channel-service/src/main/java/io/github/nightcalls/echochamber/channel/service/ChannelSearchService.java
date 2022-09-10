@@ -24,6 +24,10 @@ public class ChannelSearchService {
         return channelRepository.findChannelById(channelId);
     }
 
+    public Optional<Channel> getChannelByName(String channelName) {
+        return channelRepository.findChannelByName(channelName);
+    }
+
     public List<Channel> getChannels(Collection<Long> channelIds) {
         return channelRepository.findChannelsByIds(channelIds);
     }

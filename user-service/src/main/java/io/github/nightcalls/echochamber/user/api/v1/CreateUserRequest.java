@@ -1,4 +1,4 @@
-package io.github.nightcalls.echochamber.user.service.create;
+package io.github.nightcalls.echochamber.user.api.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

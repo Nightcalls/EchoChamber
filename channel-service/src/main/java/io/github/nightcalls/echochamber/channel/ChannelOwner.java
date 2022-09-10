@@ -4,6 +4,9 @@ public class ChannelOwner {
     private final long userId;
 
     public ChannelOwner(long ownerId) {
+        if (ownerId <= 0) {
+            throw new IllegalArgumentException("Id (" + ownerId + ") must be a positive number");
+        }
         this.userId = ownerId;
     }
 

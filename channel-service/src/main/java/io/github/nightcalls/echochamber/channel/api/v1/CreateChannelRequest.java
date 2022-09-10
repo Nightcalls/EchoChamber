@@ -1,9 +1,7 @@
-package io.github.nightcalls.echochamber.channel.service.create;
+package io.github.nightcalls.echochamber.channel.api.v1;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.annotation.Nullable;
 
 public class CreateChannelRequest {
     private final String name;

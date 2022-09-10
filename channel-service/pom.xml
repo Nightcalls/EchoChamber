@@ -59,6 +59,7 @@
 
                 <executions>
                     <execution>
+                        <id>generate-jooq</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>

@@ -24,6 +24,10 @@ public class UserSearchService {
         return userRepository.findUserById(userId);
     }
 
+    public Optional<User> getUserByName(String username) {
+        return userRepository.findUserByName(username);
+    }
+
     public List<User> getUsers(Collection<Long> userIds) {
         return userRepository.findUsersByIds(userIds);
     }

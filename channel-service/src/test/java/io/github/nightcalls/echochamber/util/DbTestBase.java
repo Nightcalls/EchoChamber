@@ -5,8 +5,10 @@ import io.zonky.test.db.postgres.junit5.EmbeddedPostgresExtension;
 import io.zonky.test.db.postgres.junit5.PreparedDbExtension;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
+@TestPropertySource(locations = "classpath:application-test.properties")
 public abstract class DbTestBase {
     @RegisterExtension
     static final PreparedDbExtension EMBEDDED_POSTGRES = EmbeddedPostgresExtension.preparedDatabase(

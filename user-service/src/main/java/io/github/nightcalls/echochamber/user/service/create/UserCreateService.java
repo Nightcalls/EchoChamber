@@ -1,6 +1,7 @@
 package io.github.nightcalls.echochamber.user.service.create;
 
 import io.github.nightcalls.echochamber.user.User;
+import io.github.nightcalls.echochamber.user.api.v1.CreateUserRequest;
 import io.github.nightcalls.echochamber.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

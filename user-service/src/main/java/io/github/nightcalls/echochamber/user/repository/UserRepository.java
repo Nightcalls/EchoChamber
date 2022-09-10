@@ -45,6 +45,12 @@ public class UserRepository {
         }
     }
 
+    public Optional<User> findUserByName(String name) {
+        try (var query = jooqContext.selectFrom(USER)) {
+            return query.where(USER.NAME.eq(name)).fetchOptional().map(this::asEntity);
+        }
+    }
+
     public void insertUser(User user) {
         if (user == null) {
             throw new IllegalArgumentException("user can't be null");

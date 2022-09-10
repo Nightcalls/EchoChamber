@@ -4,7 +4,6 @@ import io.github.nightcalls.echochamber.user.service.UserSearchService;
 import io.github.nightcalls.echochamber.user.service.change.UserChangeService;
 import io.github.nightcalls.echochamber.user.service.change.UserChanges;
 import io.github.nightcalls.echochamber.user.service.create.UserCreateService;
-import io.github.nightcalls.echochamber.user.service.create.CreateUserRequest;
 import io.github.nightcalls.echochamber.user.service.delete.UserDeleteRestoreService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

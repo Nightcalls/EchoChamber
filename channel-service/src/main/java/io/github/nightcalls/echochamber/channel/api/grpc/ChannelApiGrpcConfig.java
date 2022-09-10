@@ -1,8 +1,5 @@
 package io.github.nightcalls.echochamber.channel.api.grpc;
 
-import io.github.nightcalls.echochamber.user.api.grpc.UserApiServiceGrpc;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,12 +11,10 @@ import java.io.IOException;
 @Configuration
 public class ChannelApiGrpcConfig {
     private final int grpcServerPort;
-    private final int grpcUserServerPort;
 
-    public ChannelApiGrpcConfig(@Value("${channel.api.grpc-server.port}") int grpcServerPort,
-                                @Value("${user.api.grpc-server.port}") int grpcUserServerPort) throws IOException {
+    public ChannelApiGrpcConfig(@Value("${channel.api.grpc-server.port}") int grpcServerPort) {
         this.grpcServerPort = grpcServerPort;
-        this.grpcUserServerPort = grpcUserServerPort;
+
     }
 
     @Bean
@@ -28,13 +23,5 @@ public class ChannelApiGrpcConfig {
                 .addService(channelApiGrpcImpl)
                 .build()
                 .start();
-    }
-
-    @Bean
-    public UserApiServiceGrpc.UserApiServiceBlockingStub userApiGrpcServerToChannel() {
-        ManagedChannel grpcUserApiToChannel = ManagedChannelBuilder.forTarget(String.valueOf(grpcUserServerPort))
-                .usePlaintext()
-                .build();
-        return UserApiServiceGrpc.newBlockingStub(grpcUserApiToChannel);
     }
 }

@@ -45,6 +45,12 @@ public class ChannelRepository {
         }
     }
 
+    public Optional<Channel> findChannelByName(String name) {
+        try (var query = jooqContext.selectFrom(CHANNEL)) {
+            return query.where(CHANNEL.NAME.eq(name)).fetchOptional().map(this::asEntity);
+        }
+    }
+
     public void insertChannel(Channel channel) {
         if (channel == null) {
             throw new IllegalArgumentException("channel can't be null");

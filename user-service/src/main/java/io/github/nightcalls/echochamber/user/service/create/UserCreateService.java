@@ -31,4 +31,19 @@ public class UserCreateService {
                 .build();
         userRepository.insertUser(user);
     }
+
+    public void createUser(User user) {
+        long userId = userRepository.generateNewUserId();
+        User newUser = new User
+                .Builder()
+                .id(userId)
+                .name(user.getName())
+                .createdTs(user.getCreatedTs())
+                .updatedTs(user.getUpdatedTs())
+                .discordAuthInfo(user.getDiscordAuthInfo())
+                .lastLoginInfo(user.getLastLoginInfo().getIp())
+                .deleted(user.isDeleted())
+                .build();
+        userRepository.insertUser(newUser);
+    }
 }

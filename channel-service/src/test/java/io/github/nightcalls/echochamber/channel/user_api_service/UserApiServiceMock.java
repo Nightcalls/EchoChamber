@@ -1,6 +1,6 @@
 package io.github.nightcalls.echochamber.channel.user_api_service;
 
-import io.github.nightcalls.echochamber.channel.grpc.UserApiService;
+import io.github.nightcalls.echochamber.user.api.grpc.UserApiService;
 import io.github.nightcalls.echochamber.user.api.grpc.UserApi.User;
 
 import java.util.Collection;

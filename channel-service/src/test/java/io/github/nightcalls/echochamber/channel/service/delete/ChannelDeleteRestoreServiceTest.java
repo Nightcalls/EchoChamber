@@ -1,9 +1,10 @@
 package io.github.nightcalls.echochamber.channel.service.delete;
 
+import io.github.nightcalls.echochamber.channel.ChannelOwner;
+import io.github.nightcalls.echochamber.channel.service.NoSuchChannelException;
 import io.github.nightcalls.echochamber.util.DbTestBase;
 import io.github.nightcalls.echochamber.channel.Channel;
 import io.github.nightcalls.echochamber.channel.repository.ChannelRepository;
-import io.github.nightcalls.echochamber.channel.service.delete.ChannelDeleteRestoreService.NoSuchChannelException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,7 @@ class ChannelDeleteRestoreServiceTest extends DbTestBase {
 
     @BeforeEach
     void beforeEach() {
-        var channelNormal = new Channel.Builder().id(CHANNEL_ID).name("test").owner(USER_ID).build();
+        var channelNormal = new Channel.Builder().id(CHANNEL_ID).name("test").owner(ChannelOwner.createChannelOwnerFromRawUserId(USER_ID)).build();
         var channelDeleted = new Channel.Builder(channelNormal).id(DELETED_CHANNEL_ID).deleted(true).build();
         channelRepository.insertChannels(List.of(channelNormal, channelDeleted));
     }

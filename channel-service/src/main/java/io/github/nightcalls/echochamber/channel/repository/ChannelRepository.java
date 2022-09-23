@@ -99,7 +99,7 @@ public class ChannelRepository {
         return new Channel(
                 record.getId(),
                 new ChannelName(record.getName()),
-                new ChannelOwner(record.getOwnerId()),
+                ChannelOwner.createChannelOwnerFromRawUserId(record.getOwnerId()),
                 record.getCreatedTs(),
                 record.getUpdatedTs(),
                 record.getDeleted()

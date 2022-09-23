@@ -30,7 +30,7 @@ class ChannelSearchServiceTest extends DbTestBase {
         channelRepository.insertChannel(new Channel(
                 CHANNEL_ID,
                 new ChannelName(CHANNEL_NAME),
-                new ChannelOwner(111111),
+                ChannelOwner.createChannelOwnerFromRawUserId(111111),
                 OffsetDateTime.now(),
                 OffsetDateTime.now(),
                 false

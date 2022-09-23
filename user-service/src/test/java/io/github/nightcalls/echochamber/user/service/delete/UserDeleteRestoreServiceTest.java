@@ -1,9 +1,9 @@
 package io.github.nightcalls.echochamber.user.service.delete;
 
+import io.github.nightcalls.echochamber.user.service.NoSuchUserException;
 import io.github.nightcalls.echochamber.util.DbTestBase;
 import io.github.nightcalls.echochamber.user.User;
 import io.github.nightcalls.echochamber.user.repository.UserRepository;
-import io.github.nightcalls.echochamber.user.service.delete.UserDeleteRestoreService.NoSuchUserException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

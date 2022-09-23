@@ -99,16 +99,25 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && deleted == user.deleted && name.equals(user.name) && createdTs.equals(user.createdTs)
-                && updatedTs.equals(user.updatedTs) &&
-                // FIXME discordInfo.equals()
+        return id == user.id &&
+                name.equals(user.name) &&
+                createdTs.equals(user.createdTs) &&
+                updatedTs.equals(user.updatedTs) &&
                 Objects.equals(discordAuthInfo, user.discordAuthInfo) &&
-                lastLoginInfo.equals(user.lastLoginInfo);
+                lastLoginInfo.equals(user.lastLoginInfo) &&
+                deleted == user.deleted;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, createdTs, updatedTs, discordAuthInfo, lastLoginInfo, deleted);
+        return Objects.hash(
+                id,
+                name,
+                createdTs,
+                updatedTs,
+                discordAuthInfo,
+                lastLoginInfo,
+                deleted);
     }
 
     public static class Builder {

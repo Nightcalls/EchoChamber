@@ -3,6 +3,7 @@ package io.github.nightcalls.echochamber.user.service.change;
 import io.github.nightcalls.echochamber.user.User;
 import io.github.nightcalls.echochamber.user.UserName;
 import io.github.nightcalls.echochamber.user.repository.UserRepository;
+import io.github.nightcalls.echochamber.user.service.NoSuchUserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -46,12 +47,6 @@ public class UserChangeService {
         userRepository.updateUser(user);
         log.info("Applied changes to user {}: {}", userId, changesMsg);
         return user;
-    }
-
-    public static class NoSuchUserException extends RuntimeException {
-        public NoSuchUserException(long userId) {
-            super("User with ID " + userId + " doesn't exist");
-        }
     }
 
     public static class InvalidChangeException extends RuntimeException {

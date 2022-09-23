@@ -1,5 +1,6 @@
 package io.github.nightcalls.echochamber.user.api.v1;
 
+import io.github.nightcalls.echochamber.user.service.NoSuchUserException;
 import io.github.nightcalls.echochamber.user.service.UserSearchService;
 import io.github.nightcalls.echochamber.user.service.change.UserChangeService;
 import io.github.nightcalls.echochamber.user.service.change.UserChanges;
@@ -16,8 +17,10 @@ public class UserController {
     private final UserChangeService userChangeService;
     private final UserDeleteRestoreService userDeleteRestoreService;
 
-    public UserController(UserSearchService userSearchService, UserCreateService userCreateService,
-                          UserChangeService userChangeService, UserDeleteRestoreService userDeleteRestoreService) {
+    public UserController(UserSearchService userSearchService,
+                          UserCreateService userCreateService,
+                          UserChangeService userChangeService,
+                          UserDeleteRestoreService userDeleteRestoreService) {
         this.userSearchService = userSearchService;
         this.userCreateService = userCreateService;
         this.userChangeService = userChangeService;
@@ -39,7 +42,11 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequest createUserRequest) {
         try {
             userCreateService.createUser(createUserRequest);
-            return ResponseEntity.ok().build();
+            UserDto newUser = UserDto.fromUser(
+                    userSearchService.getUserByName(createUserRequest.getName())
+                            .orElseThrow(() -> new RuntimeException(
+                                    "An error occurred while creating the user " + createUserRequest.getName())));
+            return ResponseEntity.ok(newUser);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -50,7 +57,7 @@ public class UserController {
         try {
             var changedUser = userChangeService.changeUser(id, changes);
             return ResponseEntity.ok(UserDto.fromUser(changedUser));
-        } catch (UserChangeService.NoSuchUserException e) {
+        } catch (NoSuchUserException e) {
             return ResponseEntity.notFound().build();
         } catch (UserChangeService.InvalidChangeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -62,7 +69,7 @@ public class UserController {
         try {
             userDeleteRestoreService.deleteUser(id);
             return ResponseEntity.noContent().build();
-        } catch (UserDeleteRestoreService.NoSuchUserException e) {
+        } catch (NoSuchUserException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -72,9 +79,15 @@ public class UserController {
     public ResponseEntity<?> restoreUser(@PathVariable("id") long id) {
         try {
             userDeleteRestoreService.restoreUser(id);
-            return ResponseEntity.noContent().build();
-        } catch (UserDeleteRestoreService.NoSuchUserException e) {
+            UserDto newUser = UserDto.fromUser(
+                    userSearchService.getUser(id)
+                            .orElseThrow(() -> new RuntimeException(
+                                    "An error occurred while restoring the user " + id)));
+            return ResponseEntity.ok(newUser);
+        } catch (NoSuchUserException e) {
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

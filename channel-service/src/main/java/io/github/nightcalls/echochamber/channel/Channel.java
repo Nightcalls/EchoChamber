@@ -1,7 +1,5 @@
 package io.github.nightcalls.echochamber.channel;
 
-import io.github.nightcalls.echochamber.user.api.grpc.UserApi;
-
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -86,14 +84,23 @@ public class Channel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Channel channel = (Channel) o;
-        return id == channel.id && deleted == channel.deleted && name.equals(channel.name) &&
-                owner.equals(channel.owner) && createdTs.equals(channel.createdTs)
-                && updatedTs.equals(channel.updatedTs);
+        return id == channel.id &&
+                name.equals(channel.name) &&
+                owner.equals(channel.owner) &&
+                createdTs.equals(channel.createdTs) &&
+                updatedTs.equals(channel.updatedTs) &&
+                deleted == channel.deleted;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, owner, createdTs, updatedTs, deleted);
+        return Objects.hash(
+                id,
+                name,
+                owner,
+                createdTs,
+                updatedTs,
+                deleted);
     }
 
     public static class Builder {
@@ -128,10 +135,6 @@ public class Channel {
         public Builder name(ChannelName name) {
             this.name = name;
             return this;
-        }
-
-        public Builder owner(long ownerId) {
-            return owner(new ChannelOwner(ownerId));
         }
 
         public Builder owner(ChannelOwner owner) {

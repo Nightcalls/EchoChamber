@@ -7,8 +7,8 @@ class ChannelOwnerTest {
 
     @Test
     void checkForPositiveId() {
-        Assertions.assertDoesNotThrow(() -> new ChannelOwner(113));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new ChannelOwner(0));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new ChannelOwner(-5));
+        Assertions.assertDoesNotThrow(() -> ChannelOwner.createChannelOwnerFromRawUserId(113));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> ChannelOwner.createChannelOwnerFromRawUserId(0));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> ChannelOwner.createChannelOwnerFromRawUserId(-5));
     }
 }

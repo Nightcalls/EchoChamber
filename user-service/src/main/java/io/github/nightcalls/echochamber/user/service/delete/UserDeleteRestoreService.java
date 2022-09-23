@@ -2,6 +2,7 @@ package io.github.nightcalls.echochamber.user.service.delete;
 
 import io.github.nightcalls.echochamber.user.User;
 import io.github.nightcalls.echochamber.user.repository.UserRepository;
+import io.github.nightcalls.echochamber.user.service.NoSuchUserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -45,11 +46,5 @@ public class UserDeleteRestoreService {
         user.setUpdatedTs(OffsetDateTime.now());
         userRepository.updateUser(user);
         log.info("Restored user {}", userId);
-    }
-
-    public static class NoSuchUserException extends RuntimeException {
-        public NoSuchUserException(long userId) {
-            super("User with ID " + userId + " doesn't exist");
-        }
     }
 }

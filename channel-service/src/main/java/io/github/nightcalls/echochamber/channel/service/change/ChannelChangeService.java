@@ -3,6 +3,7 @@ package io.github.nightcalls.echochamber.channel.service.change;
 import io.github.nightcalls.echochamber.channel.Channel;
 import io.github.nightcalls.echochamber.channel.ChannelName;
 import io.github.nightcalls.echochamber.channel.repository.ChannelRepository;
+import io.github.nightcalls.echochamber.channel.service.NoSuchChannelException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class ChannelChangeService {
 
     @Transactional
     public Channel changeChannel(long channelId, ChannelChanges changes) {
-        Channel channel = channelRepository.findChannelByIdForUpdate(channelId)
+        Channel channel = channelRepository
+                .findChannelByIdForUpdate(channelId)
                 .orElseThrow(() -> new NoSuchChannelException(channelId));
         if (!changes.hasChanges()) {
             log.warn("Tried to change channel {} but no actual changes exist", channelId);
@@ -46,12 +48,6 @@ public class ChannelChangeService {
         channelRepository.updateChannel(channel);
         log.info("Applied changes to channel {}: {}", channelId, changesMsg);
         return channel;
-    }
-
-    public static class NoSuchChannelException extends RuntimeException {
-        public NoSuchChannelException(long channelId) {
-            super("Channel with ID " + channelId + " doesn't exist");
-        }
     }
 
     public static class InvalidChangeException extends RuntimeException {

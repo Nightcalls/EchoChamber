@@ -1,5 +1,6 @@
 package io.github.nightcalls.echochamber.user.service.change;
 
+import io.github.nightcalls.echochamber.user.service.NoSuchUserException;
 import io.github.nightcalls.echochamber.util.DbTestBase;
 import io.github.nightcalls.echochamber.user.LastLoginInfo;
 import io.github.nightcalls.echochamber.user.User;
@@ -65,7 +66,7 @@ class UserChangeServiceTest extends DbTestBase {
     @Test
     public void missingUser() {
         Assertions.assertDoesNotThrow(() -> userChangeService.changeUser(USER_ID, new UserChanges("legal")));
-        Assertions.assertThrows(UserChangeService.NoSuchUserException.class, () ->
+        Assertions.assertThrows(NoSuchUserException.class, () ->
                 userChangeService.changeUser(123, new UserChanges("legal")));
     }
 }

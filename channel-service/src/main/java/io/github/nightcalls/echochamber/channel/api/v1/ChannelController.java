@@ -1,6 +1,7 @@
 package io.github.nightcalls.echochamber.channel.api.v1;
 
 import io.github.nightcalls.echochamber.channel.service.ChannelSearchService;
+import io.github.nightcalls.echochamber.channel.service.NoSuchChannelException;
 import io.github.nightcalls.echochamber.channel.service.change.ChannelChangeService;
 import io.github.nightcalls.echochamber.channel.service.change.ChannelChanges;
 import io.github.nightcalls.echochamber.channel.service.create.ChannelCreateService;
@@ -16,7 +17,8 @@ public class ChannelController {
     private final ChannelChangeService channelChangeService;
     private final ChannelDeleteRestoreService channelDeleteRestoreService;
 
-    public ChannelController(ChannelSearchService channelSearchService, ChannelChangeService channelChangeService,
+    public ChannelController(ChannelSearchService channelSearchService,
+                             ChannelChangeService channelChangeService,
                              ChannelCreateService channelCreateService,
                              ChannelDeleteRestoreService channelDeleteRestoreService) {
         this.channelSearchService = channelSearchService;
@@ -38,8 +40,13 @@ public class ChannelController {
     @PostMapping("create")
     public ResponseEntity<?> createChannel(@RequestBody CreateChannelRequest createChannelRequest) {
         try {
-            channelCreateService.createChannel(createChannelRequest);
-            return ResponseEntity.ok().build();
+            String name = createChannelRequest.getName();
+            channelCreateService.createChannel(name, createChannelRequest.getOwnerId());
+            ChannelDto newChannel = ChannelDto.fromChannel(
+                    channelSearchService.getChannelByName(name)
+                            .orElseThrow(() -> new RuntimeException(
+                                    "An error occurred while creating the channel " + name)));
+            return ResponseEntity.ok(newChannel);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -50,7 +57,7 @@ public class ChannelController {
         try {
             var changedChannel = channelChangeService.changeChannel(id, changes);
             return ResponseEntity.ok(ChannelDto.fromChannel(changedChannel));
-        } catch (ChannelChangeService.NoSuchChannelException e) {
+        } catch (NoSuchChannelException e) {
             return ResponseEntity.notFound().build();
         } catch (ChannelChangeService.InvalidChangeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -62,7 +69,7 @@ public class ChannelController {
         try {
             channelDeleteRestoreService.deleteChannel(id);
             return ResponseEntity.noContent().build();
-        } catch (ChannelDeleteRestoreService.NoSuchChannelException e) {
+        } catch (NoSuchChannelException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -71,9 +78,15 @@ public class ChannelController {
     public ResponseEntity<?> restoreChannel(@PathVariable("id") long id) {
         try {
             channelDeleteRestoreService.restoreChannel(id);
-            return ResponseEntity.noContent().build();
-        } catch (ChannelDeleteRestoreService.NoSuchChannelException e) {
+            ChannelDto newChannel = ChannelDto.fromChannel(
+                    channelSearchService.getChannel(id)
+                            .orElseThrow(() -> new RuntimeException(
+                                    "An error occurred while restoring the channel " + id)));
+            return ResponseEntity.ok(newChannel);
+        } catch (NoSuchChannelException e) {
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

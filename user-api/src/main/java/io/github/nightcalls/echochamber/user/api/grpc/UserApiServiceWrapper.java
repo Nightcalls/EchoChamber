@@ -1,7 +1,4 @@
-package io.github.nightcalls.echochamber.channel.grpc;
-
-import io.github.nightcalls.echochamber.user.api.grpc.UserApi;
-import io.github.nightcalls.echochamber.user.api.grpc.UserApiServiceGrpc;
+package io.github.nightcalls.echochamber.user.api.grpc;
 
 import java.util.Collection;
 

@@ -27,7 +27,8 @@ public class ChannelApiGrpcImpl extends ChannelApiServiceGrpc.ChannelApiServiceI
     public void getChannel(ChannelApi.GetChannelRequest request,
                            StreamObserver<GetChannelResponse> responseObserver) {
         try {
-            GetChannelResponse response = channelSearchService.getChannel(request.getChannelId())
+            GetChannelResponse response = channelSearchService
+                    .getChannel(request.getChannelId())
                     .map(ChannelApiGrpcImpl::toProtoChannel)
                     .map(it -> GetChannelResponse.newBuilder().setChannel(it).build())
                     .orElse(GetChannelResponse.getDefaultInstance());
@@ -38,14 +39,14 @@ public class ChannelApiGrpcImpl extends ChannelApiServiceGrpc.ChannelApiServiceI
                     + request.getChannelId(), e));
             log.error("Channel search failed for channel id {}", request.getChannelId(), e);
         }
-
     }
 
     @Override
     public void getChannels(ChannelApi.GetChannelsRequest request,
                             StreamObserver<GetChannelsResponse> responseObserver) {
         try {
-            List<ChannelApi.Channel> channels = channelSearchService.getChannels(request.getChannelIdList())
+            List<ChannelApi.Channel> channels = channelSearchService
+                    .getChannels(request.getChannelIdList())
                     .stream()
                     .map(ChannelApiGrpcImpl::toProtoChannel)
                     .collect(Collectors.toList());

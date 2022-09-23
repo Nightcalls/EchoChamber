@@ -3,9 +3,7 @@ package io.github.nightcalls.echochamber.channel.service.create;
 import io.github.nightcalls.echochamber.channel.Channel;
 import io.github.nightcalls.echochamber.channel.ChannelName;
 import io.github.nightcalls.echochamber.channel.ChannelOwner;
-import io.github.nightcalls.echochamber.channel.api.v1.CreateChannelRequest;
 import io.github.nightcalls.echochamber.channel.config.ChannelCreateServiceTestConfiguration;
-import io.github.nightcalls.echochamber.channel.grpc.UserApiService;
 import io.github.nightcalls.echochamber.channel.repository.ChannelRepository;
 import io.github.nightcalls.echochamber.channel.user_api_service.UserApiServiceMock;
 import io.github.nightcalls.echochamber.user.api.grpc.UserApi;
@@ -16,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import io.github.nightcalls.echochamber.user.api.grpc.UserApiService;
 
 import java.time.OffsetDateTime;
 
@@ -45,7 +44,7 @@ class ChannelCreateServiceTest extends DbTestBase {
         channelRepository.insertChannel(new Channel(
                 CHANNEL_ID,
                 new ChannelName(CHANNEL_NAME),
-                new ChannelOwner(211),
+                ChannelOwner.createChannelOwnerFromRawUserId(211),
                 OffsetDateTime.now(),
                 OffsetDateTime.now(),
                 false
@@ -64,8 +63,7 @@ class ChannelCreateServiceTest extends DbTestBase {
     public void createChannel() {
         var before = channelRepository.findChannelByName(CHANNEL_NAME);
 
-        CreateChannelRequest createChannelRequest = new CreateChannelRequest(NON_EXISTING_CHANNEL_NAME, 211);
-        Assertions.assertDoesNotThrow(() -> channelCreateService.createChannel(createChannelRequest));
+        Assertions.assertDoesNotThrow(() -> channelCreateService.createChannel(NON_EXISTING_CHANNEL_NAME, 211));
 
         var after = channelRepository.findChannelByName(NON_EXISTING_CHANNEL_NAME);
         Assertions.assertNotEquals(before, after);
@@ -73,13 +71,13 @@ class ChannelCreateServiceTest extends DbTestBase {
 
     @Test
     public void createChannelForNonExistingUser() {
-        CreateChannelRequest createChannelRequest2 = new CreateChannelRequest(NON_EXISTING_CHANNEL_NAME, 213);
-        Assertions.assertThrows(ChannelCreateService.ChannelCreationException.class, () -> channelCreateService.createChannel(createChannelRequest2));
+        Assertions.assertThrows(ChannelCreateService.ChannelCreationException.class,
+                () -> channelCreateService.createChannel(NON_EXISTING_CHANNEL_NAME, 213));
     }
 
     @Test
     public void createChannelForDeletedUser() {
-        CreateChannelRequest createChannelRequest = new CreateChannelRequest(NON_EXISTING_CHANNEL_NAME, 212);
-        Assertions.assertThrows(ChannelCreateService.ChannelCreationException.class, () -> channelCreateService.createChannel(createChannelRequest));
+        Assertions.assertThrows(ChannelCreateService.ChannelCreationException.class,
+                () -> channelCreateService.createChannel(NON_EXISTING_CHANNEL_NAME, 212));
     }
 }

@@ -2,6 +2,7 @@ package io.github.nightcalls.echochamber.channel.service.delete;
 
 import io.github.nightcalls.echochamber.channel.Channel;
 import io.github.nightcalls.echochamber.channel.repository.ChannelRepository;
+import io.github.nightcalls.echochamber.channel.service.NoSuchChannelException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ public class ChannelDeleteRestoreService {
 
     @Transactional
     public void deleteChannel(long channelId) {
-        Channel channel = channelRepository.findChannelByIdForUpdate(channelId)
+        Channel channel = channelRepository
+                .findChannelByIdForUpdate(channelId)
                 .orElseThrow(() -> new NoSuchChannelException(channelId));
         if (channel.isDeleted()) {
             log.warn("Tried to delete channel {} but channel is already delete", channelId);
@@ -35,7 +37,8 @@ public class ChannelDeleteRestoreService {
 
     @Transactional
     public void restoreChannel(long channelId) {
-        Channel channel = channelRepository.findChannelByIdForUpdate(channelId)
+        Channel channel = channelRepository
+                .findChannelByIdForUpdate(channelId)
                 .orElseThrow(() -> new NoSuchChannelException(channelId));
         if (!channel.isDeleted()) {
             log.warn("Tried to restore channel {} but channel is not deleted", channelId);
@@ -45,11 +48,5 @@ public class ChannelDeleteRestoreService {
         channel.setUpdatedTs(OffsetDateTime.now());
         channelRepository.updateChannel(channel);
         log.info("Restored channel {}", channelId);
-    }
-
-    public static class NoSuchChannelException extends RuntimeException {
-        public NoSuchChannelException(long channelId) {
-            super("Channel with ID " + channelId + " doesn't exist");
-        }
     }
 }

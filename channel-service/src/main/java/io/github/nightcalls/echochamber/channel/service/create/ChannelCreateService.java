@@ -1,31 +1,30 @@
 package io.github.nightcalls.echochamber.channel.service.create;
 
 import io.github.nightcalls.echochamber.channel.Channel;
-import io.github.nightcalls.echochamber.channel.api.v1.CreateChannelRequest;
-import io.github.nightcalls.echochamber.channel.grpc.UserApiService;
+import io.github.nightcalls.echochamber.channel.ChannelOwner;
 import io.github.nightcalls.echochamber.channel.repository.ChannelRepository;
 import io.github.nightcalls.echochamber.user.api.grpc.UserApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import io.github.nightcalls.echochamber.user.api.grpc.UserApiService;
 
 @Service
 public class ChannelCreateService {
     private static final Logger log = LoggerFactory.getLogger(ChannelCreateService.class);
 
     private final ChannelRepository channelRepository;
-    private final UserApiService stub;
+    private final UserApiService userApiService;
 
     @Autowired
     public ChannelCreateService(ChannelRepository channelRepository, UserApiService userApiService) {
         this.channelRepository = channelRepository;
-        this.stub = userApiService;
+        this.userApiService = userApiService;
     }
 
-    public void createChannel(CreateChannelRequest createChannelRequest) throws ChannelCreationException {
-        long ownerId = createChannelRequest.getOwnerId();
-        UserApi.User response = stub.getUser(ownerId);
+    public void createChannel(String name, long ownerId) throws ChannelCreationException {
+        UserApi.User response = userApiService.getUser(ownerId);
 
         if (response == null) {
             throw new ChannelCreationException("User " + ownerId + " not found and can't create a channel");
@@ -39,8 +38,8 @@ public class ChannelCreateService {
         Channel channel = new Channel
                 .Builder()
                 .id(channelId)
-                .name(createChannelRequest.getName())
-                .owner(ownerId)
+                .name(name)
+                .owner(new ChannelOwner(response))
                 .build();
         channelRepository.insertChannel(channel);
     }

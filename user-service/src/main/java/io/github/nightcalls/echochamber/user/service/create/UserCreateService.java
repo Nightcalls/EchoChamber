@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+// FIXME dev-only, remove later
 @Service
 public class UserCreateService {
     private static final Logger log = LoggerFactory.getLogger(UserCreateService.class);

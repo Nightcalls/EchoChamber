@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.github.nightcalls.echochamber.user.api.grpc.UserApiService;
 
+import java.util.Optional;
+
 @Service
 public class ChannelCreateService {
     private static final Logger log = LoggerFactory.getLogger(ChannelCreateService.class);
@@ -24,13 +26,13 @@ public class ChannelCreateService {
     }
 
     public void createChannel(String name, long ownerId) throws ChannelCreationException {
-        UserApi.User response = userApiService.getUser(ownerId);
+        Optional<UserApi.User> owner = userApiService.getUser(ownerId);
 
-        if (response == null) {
+        if (owner.isEmpty()) {
             throw new ChannelCreationException("User " + ownerId + " not found and can't create a channel");
         }
 
-        if (response.getDeleted()) {
+        if (owner.get().getDeleted()) {
             throw new ChannelCreationException("Deleted user " + ownerId + " can't create a channel");
         }
 
@@ -39,7 +41,7 @@ public class ChannelCreateService {
                 .Builder()
                 .id(channelId)
                 .name(name)
-                .owner(new ChannelOwner(response))
+                .owner(new ChannelOwner(owner.get()))
                 .build();
         channelRepository.insertChannel(channel);
     }

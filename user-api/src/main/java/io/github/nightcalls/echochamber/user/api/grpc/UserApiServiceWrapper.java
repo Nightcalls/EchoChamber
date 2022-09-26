@@ -1,6 +1,7 @@
 package io.github.nightcalls.echochamber.user.api.grpc;
 
 import java.util.Collection;
+import java.util.Optional;
 
 public class UserApiServiceWrapper implements UserApiService {
     private final UserApiServiceGrpc.UserApiServiceBlockingStub stub;
@@ -10,9 +11,13 @@ public class UserApiServiceWrapper implements UserApiService {
     }
 
     @Override
-    public UserApi.User getUser(long id) {
+    public Optional<UserApi.User> getUser(long id) {
         UserApi.GetUserRequest getUserRequest = UserApi.GetUserRequest.newBuilder().setUserId(id).build();
-        return stub.getUser(getUserRequest).getUser();
+        var user = stub.getUser(getUserRequest);
+        if (user.hasUser()) {
+            return Optional.of(user.getUser());
+        }
+        return Optional.empty();
     }
 
     @Override

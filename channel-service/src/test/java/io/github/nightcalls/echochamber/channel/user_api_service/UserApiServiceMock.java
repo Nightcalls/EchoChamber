@@ -6,6 +6,7 @@ import io.github.nightcalls.echochamber.user.api.grpc.UserApi.User;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -28,8 +29,8 @@ public class UserApiServiceMock implements UserApiService {
     }
 
     @Override
-    public User getUser(long id) {
-        return users.get(id);
+    public Optional<User> getUser(long id) {
+        return Optional.ofNullable(users.get(id));
     }
 
     @Override

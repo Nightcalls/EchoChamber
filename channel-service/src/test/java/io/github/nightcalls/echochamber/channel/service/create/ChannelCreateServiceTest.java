@@ -3,7 +3,7 @@ package io.github.nightcalls.echochamber.channel.service.create;
 import io.github.nightcalls.echochamber.channel.Channel;
 import io.github.nightcalls.echochamber.channel.ChannelName;
 import io.github.nightcalls.echochamber.channel.ChannelOwner;
-import io.github.nightcalls.echochamber.channel.config.ChannelCreateServiceTestConfiguration;
+import io.github.nightcalls.echochamber.channel.config.ExternalServicesTestConfig;
 import io.github.nightcalls.echochamber.channel.repository.ChannelRepository;
 import io.github.nightcalls.echochamber.channel.user_api_service.UserApiServiceMock;
 import io.github.nightcalls.echochamber.user.api.grpc.UserApi;
@@ -18,7 +18,7 @@ import io.github.nightcalls.echochamber.user.api.grpc.UserApiService;
 
 import java.time.OffsetDateTime;
 
-@ContextConfiguration(classes = ChannelCreateServiceTestConfiguration.class)
+@ContextConfiguration(classes = ExternalServicesTestConfig.class)
 class ChannelCreateServiceTest extends DbTestBase {
     private static final long CHANNEL_ID = 111;
     private static final String CHANNEL_NAME = "test111";

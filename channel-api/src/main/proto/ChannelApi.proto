@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package io.github.nightcalls.echochamber.channel.api.grpc;
+
+import "google/protobuf/timestamp.proto";
+
+message Channel {
+  uint64 id = 1;
+  string name = 2;
+  uint64 channelOwner = 3;
+  google.protobuf.Timestamp createdTs = 4; // UTC+0
+  google.protobuf.Timestamp updatedTs = 5; // UTC+0
+  reserved 6 to 19;
+  bool deleted = 20;
+}
+
+message GetChannelRequest {
+  uint64 channelId = 1;
+}
+
+message GetChannelResponse {
+  optional Channel channel = 1;
+}
+
+message GetChannelsRequest {
+  repeated uint64 channelId = 1;
+}
+
+message GetChannelsResponse {
+  repeated Channel channel = 1;
+}
+
+service ChannelApiService {
+  rpc getChannel(GetChannelRequest) returns (GetChannelResponse);
+  rpc getChannels(GetChannelsRequest) returns (GetChannelsResponse);
+}

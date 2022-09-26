@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>echochamber</groupId>
+    <groupId>io.github.nightcalls</groupId>
     <artifactId>deps-common</artifactId>
     <version>default</version>
     <packaging>pom</packaging>

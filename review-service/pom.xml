@@ -2,34 +2,36 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>deps-common</artifactId>
-        <groupId>echochamber</groupId>
-        <version>default</version>
-        <relativePath>../deps-common/pom.xml</relativePath>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>io.github.nightcalls</groupId>
+        <artifactId>deps-services</artifactId>
+        <version>default</version>
+        <relativePath>../deps-services/pom.xml</relativePath>
+    </parent>
+
     <artifactId>review-service</artifactId>
+    <version>default</version>
 
     <dependencies>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>base-service</artifactId>
             <version>default</version>
         </dependency>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>review-api</artifactId>
             <version>default</version>
         </dependency>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>channel-api</artifactId>
             <version>default</version>
         </dependency>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>media-api</artifactId>
             <version>default</version>
         </dependency>

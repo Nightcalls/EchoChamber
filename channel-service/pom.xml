@@ -2,32 +2,95 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>deps-common</artifactId>
-        <groupId>echochamber</groupId>
-        <version>default</version>
-        <relativePath>../deps-common/pom.xml</relativePath>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>io.github.nightcalls</groupId>
+        <artifactId>deps-services</artifactId>
+        <version>default</version>
+        <relativePath>../deps-services/pom.xml</relativePath>
+    </parent>
+
     <artifactId>channel-service</artifactId>
+    <version>default</version>
 
     <dependencies>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>base-service</artifactId>
             <version>default</version>
         </dependency>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>channel-api</artifactId>
             <version>default</version>
         </dependency>
         <dependency>
-            <groupId>echochamber</groupId>
+            <groupId>io.github.nightcalls</groupId>
             <artifactId>user-api</artifactId>
             <version>default</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.zonky.test</groupId>
+            <artifactId>embedded-postgres</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>io.github.nightcalls</groupId>
+                <artifactId>embedded-postgres-jooq-generator-maven-plugin</artifactId>
+
+                <executions>
+                    <execution>
+                        <id>generate-jooq</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <!-- Path to your changelog file relative to module dir -->
+                    <liquibase.changeLogFile>src/main/resources/sql/changelogs.xml</liquibase.changeLogFile>
+                    <!-- jOOQ codegen config - see https://www.jooq.org/doc/latest/manual/code-generation/codegen-configuration/ -->
+                    <jooq.generator>
+                        <database>
+                            <!-- Change to service scheme -->
+                            <inputSchema>c</inputSchema>
+                            <includes>.*</includes>
+                        </database>
+
+                        <generate>
+                            <sequences>true</sequences>
+                        </generate>
+
+                        <target>
+                            <!-- Change to service package -->
+                            <packageName>io.github.nightcalls.echochamber.channel.repository.jooq</packageName>
+                            <directory>src/main/java</directory>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                        </target>
+                    </jooq.generator>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
